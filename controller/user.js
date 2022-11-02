@@ -99,86 +99,6 @@ const addNotification = async (user, notification) => {
   }
 };
 
-/**
- *
- * @param {object} user { user, name, password, photo, email, role, theme}
- * @param {boolean} create if it's for create a new user
- * @returns user data
- */
-const saveUser = async (user, create) => {
-  try {
-    if (create) {
-      await insert("users", user.user.toLocaleLowerCase(), user);
-      // return without password
-      user.password = "";
-      return {
-        status: 200,
-        data: {
-          ...user,
-        },
-      };
-    } else {
-      let userData = await getValue("users", user.user.toLowerCase());
-      if (userData) {
-        if (user.password === "") user.password = userData.password;
-        await update("users", user.user.toLocaleLowerCase(), user);
-        // return without password
-        user.password = "";
-        return {
-          status: 200,
-          data: {
-            ...user,
-          },
-        };
-      }
-    }
-    return { status: 422, error: "not found" };
-  } catch (err) {
-    return { status: 500, error: String(err) };
-  }
-};
-
-/**
- *
- * @param {string} user
- */
-const deleteUser = async (user) => {
-  try {
-    const data = await getTable("users");
-    if (data && data.length)
-      for (let i = 0; i < data.length; i += 1) {
-        if (data[i].id === user) delete data[i];
-        await setTable("users", data);
-        return { status: 200, data: "deleted" };
-      }
-    return { status: 422, error: "not found" };
-  } catch (error) {
-    return { status: 500, error: String(error) };
-  }
-};
-
-/**
- *
- * @param {string[]} users
- * @returns 204 if there is nothing to delete, 200 if deleted successfully
- */
-const deleteUsers = async (users) => {
-  if (!users.length) return { status: 204, message: "nothing to delete" };
-  try {
-    const data = await getTable("users");
-    if (data) {
-      users.forEach((item) => {
-        delete data[item];
-      });
-      await setTable("users", data);
-      return { status: 200, message: "deleted" };
-    }
-    return { status: 422, error: "not found" };
-  } catch (error) {
-    return { status: 500, error: String(error) };
-  }
-};
-
 const loadUsers = async () => {
   try {
     const data = await getTable("users");
@@ -228,9 +148,6 @@ module.exports = {
   login,
   getUserNotifications,
   addNotification,
-  saveUser,
   register,
   loadUsers,
-  deleteUser,
-  deleteUsers,
 };
