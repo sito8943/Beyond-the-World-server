@@ -1,7 +1,7 @@
 // @ts-check
-import Entity from "./Entity";
+const Entity = require("./Entity");
 
-import { Price } from "./Currency";
+const { Price } = require("./Currency");
 
 class Unit extends Entity {
   /**
@@ -11,7 +11,7 @@ class Unit extends Entity {
    * @param {Price} price
    * @param {number} life
    * @param {number} speed
-   * @param {Entity[]} req
+   * @param {string[]} req
    */
   constructor(id, name, price, life, speed, req) {
     super(id, name);
@@ -59,10 +59,6 @@ class Unit extends Entity {
   set CurrentSpeed(newSpeed) {
     this.currentSpeed = newSpeed;
   }
-
-  get Req() {
-    return this.req;
-  }
 }
 
-export default Unit;
+module.exports = Unit;

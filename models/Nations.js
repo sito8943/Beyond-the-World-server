@@ -1,9 +1,9 @@
 // @ts-check
-import Currency, { CurrencyEnum } from "./Currency";
-import Building, { BuildingEnum } from "./Building";
-import Technology from "./Technology";
-import Unit from "./Units";
-import Hero from "./Heros";
+const Currency = require("./Currency");
+const Building = require("./Building");
+const Technology = require("./Technology");
+const Unit = require("./Units");
+const Hero = require("./Heros");
 
 class Nation {
   /**
@@ -54,22 +54,5 @@ class Nation {
     return this.heros;
   }
 }
-
-export const NationsEnum = {
-  R2FyZGVuIFBhcmsncyBCYW5kaXQgQm95cw: new Nation(
-    "R2FyZGVuIFBhcmsncyBCYW5kaXQgQm95cw",
-    "Garden Park's Bandit Boys",
-    [
-      CurrencyEnum.UGVzb3M,
-      CurrencyEnum.Rm9vZA,
-      CurrencyEnum.V29vZA,
-      CurrencyEnum.U3RvbmU,
-    ],
-    [BuildingEnum.Q2FtcA],
-    [],
-    [],
-    []
-  ),
-};
 
 export default Nation;

@@ -1,24 +1,18 @@
 // @ts-check
-import Entity from "./Entity";
+const Entity = require("./Entity");
 
 class Technology extends Entity {
   /**
    * @param {string} id
    * @param {string} name
+   * @param {string[]} req
    */
-  constructor(id, name) {
-    super(id, name);
+  constructor(id, name, req) {
+    super(id, name, req);
     this.id = id;
     this.name = name;
-  }
-
-  get Id() {
-    return this.id;
-  }
-
-  get Name() {
-    return this.name;
+    this.req = req;
   }
 }
 
-export default Technology;
+module.exports = Technology;

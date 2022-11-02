@@ -20,7 +20,7 @@ class Currency {
   }
 }
 
-export class Price {
+class Price {
   /**
    *
    * @param {Currency} currency
@@ -49,7 +49,7 @@ export class Price {
   }
 }
 
-export class ProductionType {
+class ProductionType {
   /**
    *
    * @param {Currency} currency
@@ -78,13 +78,8 @@ export class ProductionType {
   }
 }
 
-export const CurrencyEnum = {
-  UGVzb3M: new Currency("UGVzb3M", "Pesos"),
-  Rm9vZA: new Currency("Rm9vZA", "Food"),
-  V29vZA: new Currency("V29vZA", "Wood"),
-  U3RvbmU: new Currency("U3RvbmU", "Stone"),
-  R2FsIERvbGxhcnM: new Currency("R2FsIERvbGxhcnM", "Gal Dollars"),
-  R29sZA: new Currency("R29sZA", "Gold"),
+module.exports = {
+  Currency,
+  Price,
+  ProductionType,
 };
-
-export default Currency;

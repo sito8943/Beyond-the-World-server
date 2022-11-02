@@ -1,0 +1,37 @@
+{
+  "nation": {
+    "R2FyZGVuIFBhcmsncyBCYW5kaXQgQm95cw": {
+      "code": "R2FyZGVuIFBhcmsncyBCYW5kaXQgQm95cw",
+      "name": "Garden Park's Bandit Boys",
+      "currencies": ["UGVzb3M", "Rm9vZA", "V29vZA", "U3RvbmU"],
+      "buildings": ["Q2FtcA"],
+      "units": [],
+      "technologies": [],
+      "heros": []
+    }
+  },
+  "building": {
+    "Q2FtcA": {
+      "code": "Q2FtcA",
+      "name": "Camp",
+      "price": { "currency": "UGVzb3M", "count": 0 },
+      "buildingType": "Rm9ydHJlc3M",
+      "productionType": { "currency": "UGVzb3M", "count": 100 },
+      "req": []
+    }
+  },
+  "buildingType": {
+    "Rm9ydHJlc3M": { "code": "Rm9ydHJlc3M", "name": "Fortress" },
+    "UHJvZHVjdGlvbg": { "code": "UHJvZHVjdGlvbg", "name": "Production" },
+    "TWlsaXRhcg": { "code": "TWlsaXRhcg", "name": "Militar" },
+    "VGVjaG5vbG9neQ": { "code": "VGVjaG5vbG9neQ", "name": "Technology" }
+  },
+  "currency": {
+    "UGVzb3M": { "code": "UGVzb3M", "name": "Pesos" },
+    "Rm9vZA": { "code": "Rm9vZA", "name": "Food" },
+    "V29vZA": { "code": "V29vZA", "name": "Wood" },
+    "U3RvbmU": { "code": "U3RvbmU", "name": "Stone" },
+    "R2FsIERvbGxhcnM": { "code": "R2FsIERvbGxhcnM", "name": "Gal Dollars" },
+    "R29sZA": { "code": "R29sZA", "name": "Gold" }
+  }
+}

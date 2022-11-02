@@ -1,7 +1,7 @@
 // @ts-check
 
-import Entity from "./Entity";
-import { CurrencyEnum, Price, ProductionType } from "./Currency";
+const Entity = require("./Entity");
+const { Price, ProductionType } = require("./Currency");
 
 class BuildingType {
   /**
@@ -31,34 +31,17 @@ class Building extends Entity {
    * @param {Price} price
    * @param {BuildingType} type
    * @param {ProductionType} production
-   * @param {Entity[]} req
+   * @param {string[]} req
    */
   constructor(id, name, price, type, production, req) {
-    super(id, name);
+    super(id, name, req);
     this.price = price;
     this.currentPrice = new Price(price.Currency, price.Count);
     this.type = type;
     this.production = production;
-    this.req = req;
   }
 }
 
-export const BuildingTypeEnum = {
-  Rm9ydHJlc3M: new BuildingType("Rm9ydHJlc3M", "Fortress"),
-  UHJvZHVjdGlvbg: new BuildingType("UHJvZHVjdGlvbg", "Production"),
-  TWlsaXRhcg: new BuildingType("TWlsaXRhcg", "Militar"),
-  VGVjaG5vbG9neQ: new BuildingType("VGVjaG5vbG9neQ", "Technology"),
+module.exports = {
+  Building,
 };
-
-export const BuildingEnum = {
-  Q2FtcA: new Building(
-    "Q2FtcA",
-    "Camp",
-    new Price(CurrencyEnum.UGVzb3M, 0),
-    BuildingTypeEnum.Rm9ydHJlc3M,
-    new ProductionType(CurrencyEnum.UGVzb3M, 100),
-    []
-  ),
-};
-
-export default Building;

@@ -5,10 +5,12 @@ class Entity {
    *
    * @param {string} id
    * @param {string} name
+   * @param {string[]} req
    */
-  constructor(id, name) {
+  constructor(id, name, req = []) {
     this.id = id;
     this.name = name;
+    this.req = req;
   }
 
   get Id() {
@@ -18,6 +20,10 @@ class Entity {
   get Name() {
     return this.name;
   }
+
+  get Req() {
+    return this.req;
+  }
 }
 
-export default Entity;
+module.exports = Entity;
