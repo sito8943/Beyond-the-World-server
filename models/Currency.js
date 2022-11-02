@@ -49,37 +49,7 @@ class Price {
   }
 }
 
-class ProductionType {
-  /**
-   *
-   * @param {Currency} currency
-   * @param {number} count
-   */
-  constructor(currency, count) {
-    this.currency = currency;
-    this.count = count;
-    this.currentCount = count;
-  }
-
-  get Currency() {
-    return this.Currency;
-  }
-
-  get Count() {
-    return this.count;
-  }
-
-  get CurrentCount() {
-    return this.currentCount;
-  }
-
-  set CurrentCount(newCount) {
-    this.currentCount = newCount;
-  }
-}
-
 module.exports = {
   Currency,
   Price,
-  ProductionType,
 };
