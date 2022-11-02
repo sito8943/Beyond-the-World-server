@@ -1,1 +1,16 @@
-{}
+{
+  "user": {
+    "c2l0bzg5NDM": {
+      "id": "c2l0bzg5NDM",
+      "name": "sito8943",
+      "nick": "Sito",
+      "email": "sito8943@gmail.com",
+      "password": "",
+      "nation": "R2FyZGVuIFBhcmsncyBCYW5kaXQgQm95cw",
+      "resources": [0, 0, 0, 0],
+      "buildings": [],
+      "units": [],
+      "heros": []
+    }
+  }
+}
