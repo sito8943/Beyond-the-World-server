@@ -1,7 +1,7 @@
 // @ts-check
 
 const Entity = require("./Entity");
-const { Price, ProductionType } = require("./Currency");
+const { ProductionType } = require("./Currency");
 
 class BuildingType {
   /**
@@ -28,15 +28,14 @@ class Building extends Entity {
    *
    * @param {string} id
    * @param {string} name
-   * @param {Price} price
+   * @param {object} price
    * @param {BuildingType} type
    * @param {ProductionType} production
    * @param {string[]} req
    */
   constructor(id, name, price, type, production, req) {
-    super(id, name, req);
-    this.price = price;
-    this.currentPrice = new Price(price.Currency, price.Count);
+    super(id, name, price, req);
+    this.currentPrice = { ...price };
     this.type = type;
     this.production = production;
   }

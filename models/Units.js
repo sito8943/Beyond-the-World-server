@@ -1,22 +1,19 @@
 // @ts-check
 const Entity = require("./Entity");
 
-const { Price } = require("./Currency");
-
 class Unit extends Entity {
   /**
    *
    * @param {string} id
    * @param {string} name
-   * @param {Price} price
+   * @param {object} price
    * @param {number} life
    * @param {number} speed
    * @param {string[]} req
    */
   constructor(id, name, price, life, speed, req) {
-    super(id, name);
-    this.price = price;
-    this.currentPrice = new Price(price.Currency, price.Count);
+    super(id, name, price, req);
+    this.currentPrice = { ...price };
     this.life = life;
     this.currentLife = life;
     this.speed = speed;
@@ -24,8 +21,19 @@ class Unit extends Entity {
     this.req = req;
   }
 
-  get Price() {
-    return this.price;
+  createUnit(
+    options = { id: "", name: "", price: {}, life: 0, speed: 0, req: [] }
+  ) {
+    const { id, name, price, life, speed, req } = options;
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.currentPrice = { ...price };
+    this.life = life;
+    this.currentLife = life;
+    this.speed = speed;
+    this.currentSpeed = speed;
+    this.req = req;
   }
 
   get CurrentPrice() {

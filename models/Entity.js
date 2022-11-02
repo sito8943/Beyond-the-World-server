@@ -5,12 +5,25 @@ class Entity {
    *
    * @param {string} id
    * @param {string} name
+   * @param {object} price
    * @param {string[]} req
    */
-  constructor(id, name, req = []) {
+  constructor(id, name, price = {}, req = []) {
     this.id = id;
     this.name = name;
+    this.price = price;
     this.req = req;
+  }
+
+  /**
+   *
+   * @param {string[]} technologies
+   * @returns
+   */
+  isReady(technologies) {
+    for (const item of this.req)
+      if (technologies.indexOf(item) === -1) return false;
+    return true;
   }
 
   get Id() {
@@ -23,6 +36,10 @@ class Entity {
 
   get Req() {
     return this.req;
+  }
+
+  get Price() {
+    return this.price;
   }
 }
 

@@ -7,10 +7,11 @@
       "email": "sito8943@gmail.com",
       "password": "",
       "nation": "R2FyZGVuIFBhcmsncyBCYW5kaXQgQm95cw",
-      "resources": [0, 0, 0, 0],
-      "buildings": [],
-      "units": [],
-      "heros": []
+      "resources": { "UGVzb3M": 0, "Rm9vZA": 0, "V29vZA": 0, "U3RvbmU": 0 },
+      "buildings": {},
+      "technologies": {},
+      "units": {},
+      "heros": {}
     }
   }
 }

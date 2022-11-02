@@ -26,6 +26,28 @@ class Nation {
     this.heros = heros;
   }
 
+  createNation(
+    options = {
+      id: "",
+      name: "",
+      currencies: [],
+      buildings: [],
+      units: [],
+      technologies: [],
+      heros: [],
+    }
+  ) {
+    const { id, name, currencies, buildings, units, technologies, heros } =
+      options;
+    this.id = id;
+    this.name = name;
+    this.currencies = currencies;
+    this.buildings = buildings;
+    this.units = units;
+    this.technologies = technologies;
+    this.heros = heros;
+  }
+
   get Id() {
     return this.id;
   }
