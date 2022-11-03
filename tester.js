@@ -2,10 +2,13 @@ const cron = require("node-cron");
 
 const User = require("./models/User");
 
-const { getUser } = require("./controller/user");
+const { getUserByName } = require("./controller/user");
 
-const sito = new User();
+const main = async () => {
+  const sito = new User();
+  const data = await getUserByName("sito8943");
+  // sito.createUser();
+  console.log(data);
+};
 
-cron.schedule("* * * * * *", async () => {
-  console.log("hola");
-});
+main();

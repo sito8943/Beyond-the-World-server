@@ -53,7 +53,7 @@ const login = async (user, pPassword) => {
   try {
     const data = await getUserByName(user.toLowerCase());
     if (data) {
-      const { name, password, theme, role, photo, email } = data;
+      const { name, password } = data;
       if (pPassword.toLowerCase() === password.toLowerCase()) {
         const token = uuid.v4();
         // @ts-ignore
@@ -62,10 +62,6 @@ const login = async (user, pPassword) => {
           status: 200,
           data: {
             name,
-            role: role || "superadmin",
-            theme,
-            email,
-            photo,
             token,
             expiration: giveToken(),
           },

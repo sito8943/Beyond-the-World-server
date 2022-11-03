@@ -1,6 +1,6 @@
 const express = require("express");
-const path = require("path");
 
+const { usersOnline } = require("../chronons/resourcesChronons");
 const { error, log, info, good } = require("../utils/chalk");
 
 // locals
@@ -11,6 +11,7 @@ const {
   loadUser,
   getUserNotifications,
 } = require("../services/user");
+const { getUserByName } = require("../controller/user");
 
 // auth
 const { verifyBearer } = require("../utils/secure");
@@ -50,6 +51,7 @@ router.post("/login", async (req, res) => {
     switch (result.status) {
       case 200:
         log(good(`${user} logged successful`));
+        usersOnline[user] = await getUserByName(user);
         res.send(result).status(200);
         break;
       default:

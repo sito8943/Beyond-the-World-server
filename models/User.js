@@ -1,6 +1,11 @@
 // @ts-check
 const Entity = require("./Entity");
 
+const UserStatusEnum = {
+  Offline: 0,
+  Online: 1,
+};
+
 class User {
   /**
    *
@@ -10,6 +15,8 @@ class User {
    * @param {string} email
    * @param {string} password
    * @param {string} nation
+   * @param {number} state
+   * @param {number} lastOnline
    * @param {object} resources
    * @param {object} buildings
    * @param {object} technologies
@@ -23,6 +30,8 @@ class User {
     email = "",
     password = "",
     nation = "",
+    state = UserStatusEnum.Offline,
+    lastOnline = 0,
     resources = {},
     buildings = {},
     technologies = {},
@@ -35,6 +44,8 @@ class User {
     this.email = email;
     this.password = password;
     this.nation = nation;
+    this.state = state;
+    this.lastOnline = lastOnline;
     this.resources = resources;
     this.buildings = buildings;
     this.technologies = technologies;
@@ -50,6 +61,8 @@ class User {
       email: "",
       password: "",
       nation: "",
+      state: UserStatusEnum.Offline,
+      lastOnline: 0,
       resources: {},
       buildings: {},
       technologies: {},
@@ -64,6 +77,8 @@ class User {
       email,
       password,
       nation,
+      state,
+      lastOnline,
       resources,
       technologies,
       buildings,
@@ -76,6 +91,8 @@ class User {
     this.email = email;
     this.password = password;
     this.nation = nation;
+    this.state = state;
+    this.lastOnline = lastOnline;
     this.resources = resources;
     this.technologies = technologies;
     this.buildings = buildings;
@@ -91,6 +108,8 @@ class User {
       email: this.email,
       password: this.password,
       nation: this.nation,
+      state: this.state,
+      lastOnline: this.lastOnline,
       resources: this.resources,
       buildings: this.buildings,
       technologies: this.technologies,
@@ -179,6 +198,22 @@ class User {
 
   get Nation() {
     return this.nation;
+  }
+
+  get State() {
+    return this.state;
+  }
+
+  set State(newState) {
+    this.state = newState;
+  }
+
+  get LastOnline() {
+    return this.lastOnline;
+  }
+
+  set LastOnline(newLastOnline) {
+    this.lastOnline = newLastOnline;
   }
 
   get Resources() {

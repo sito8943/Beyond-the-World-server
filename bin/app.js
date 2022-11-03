@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 const config = require("../config");
-// const cron = require("node-cron");
+
+const { resourcesChronons } = require("../chronons/resourcesChronons");
 
 /**
  * Module dependencies.
@@ -45,15 +46,8 @@ io.on("connection", (socket) => {
 const onListening = () => {
   const addr = server.address();
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  /* cron.schedule("* * * * *", async () => {
-    console.log("Checking for backup");
-    if (await wasScheduled()) {
-      console.log("Saving backup");
-      console.log(await saveBackupFile());
-      console.log("Backup done");
-    } else console.log("There is no scheduled backup");
-  }); */
   debug("Listening on " + bind);
+  resourcesChronons();
   console.log("Listening on " + bind);
 };
 
