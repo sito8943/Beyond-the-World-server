@@ -1,4 +1,4 @@
-const keys = [];
+const keys = {};
 
 const verifyBearer = (auth) => {
   const credentials = auth.split(" ")[1];

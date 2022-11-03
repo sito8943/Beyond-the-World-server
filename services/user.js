@@ -11,6 +11,7 @@ const {
 } = require("../controller/user");
 
 const { keys } = require("../utils/secure");
+const { UserStatusEnum, User } = require("../models/User");
 
 const giveToken = () => {
   const date = new Date();
@@ -53,20 +54,49 @@ const login = async (user, pPassword) => {
   try {
     const data = await getUserByName(user.toLowerCase());
     if (data) {
-      const { name, password } = data;
+      const { id, password } = data;
       if (pPassword.toLowerCase() === password.toLowerCase()) {
+        await updateUser({ ...data, state: UserStatusEnum.Online });
         const token = uuid.v4();
         // @ts-ignore
-        keys.push(token);
+        keys[id] = token;
         return {
           status: 200,
           data: {
-            name,
+            id,
             token,
             expiration: giveToken(),
           },
         };
       } else return { status: 422, error: "wrong password" };
+    }
+    return { status: 422, error: "not found" };
+  } catch (error) {
+    return { status: 500, error: String(error) };
+  }
+};
+
+/**
+ *
+ * @param {string} user
+ * @returns
+ */
+const logOut = async (user) => {
+  try {
+    const data = await getUser(user);
+    if (data) {
+      delete keys[user];
+      await updateUser({
+        ...data,
+        state: UserStatusEnum.Offline,
+        lastOnline: new Date().getTime(),
+      });
+      return {
+        status: 200,
+        data: {
+          user,
+        },
+      };
     }
     return { status: 422, error: "not found" };
   } catch (error) {
@@ -147,6 +177,7 @@ const register = async (user) => {
 
 module.exports = {
   login,
+  logOut,
   getUserNotifications,
   addNotification,
   register,

@@ -6,6 +6,7 @@ const { error, log, info, good } = require("../utils/chalk");
 // locals
 const {
   login,
+  logOut,
   register,
   loadUsers,
   loadUser,
@@ -40,6 +41,30 @@ router.post("/validate", async (req, res) => {
     }
   }
   res.send({ status: 200, data: { error: "unauthorized" } });
+});
+
+router.post("/logout", async (req, res) => {
+  log(info("Logging out user"));
+  load.start();
+  try {
+    const { user } = req.body;
+    const result = await logOut(user);
+    switch (result.status) {
+      case 200:
+        log(good(`${user} logged out successful`));
+        delete usersOnline[user];
+        res.send(result).status(200);
+        break;
+      default:
+        log(error(result.error));
+        res.send({ error: result.error }).status(result.status);
+        break;
+    }
+  } catch (err) {
+    log(error(err));
+    res.sendStatus(500);
+  }
+  load.stop();
 });
 
 router.post("/login", async (req, res) => {
