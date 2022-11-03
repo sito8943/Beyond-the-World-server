@@ -4,6 +4,7 @@ const uuid = require("node-uuid");
 
 const {
   getUser,
+  getUserByName,
   getUsers,
   createUser,
   updateUser,
@@ -50,7 +51,7 @@ const getUserNotifications = async (user) => {
  */
 const login = async (user, pPassword) => {
   try {
-    const data = await getUser(user.toLowerCase());
+    const data = await getUserByName(user.toLowerCase());
     if (data) {
       const { name, password, theme, role, photo, email } = data;
       if (pPassword.toLowerCase() === password.toLowerCase()) {
@@ -128,7 +129,7 @@ const loadUsers = async () => {
  */
 const register = async (user) => {
   try {
-    const data = await createUser(user.name.toLowerCase());
+    const data = await createUser(user);
     if (data === undefined) {
       const token = uuid.v4();
       // @ts-ignore

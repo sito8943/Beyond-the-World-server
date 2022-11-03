@@ -36,6 +36,23 @@ const getUser = async (id) => {
 
 /**
  *
+ * @param {string} name
+ * @returns
+ */
+const getUserByName = async (name) => {
+  try {
+    const data = await getTable("user");
+    if (data)
+      for (const item of Object.values(data))
+        if (item.name === name) return item;
+    return undefined;
+  } catch (err) {
+    return err;
+  }
+};
+
+/**
+ *
  * @param {object} remoteData
  */
 const updateUser = async (remoteData) => {
@@ -87,6 +104,7 @@ const getUsers = async (condition = {}, toFetch = {}) => {
 module.exports = {
   createUser,
   getUser,
+  getUserByName,
   updateUser,
   getUsers,
 };
