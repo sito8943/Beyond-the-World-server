@@ -19,7 +19,7 @@ class Hero extends Unit {
     this.level = level;
   }
 
-  createUnit(
+  createHero(
     options = {
       id: "",
       name: "",

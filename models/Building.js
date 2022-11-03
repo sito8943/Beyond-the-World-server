@@ -68,6 +68,36 @@ class Building extends Entity {
     this.type = type;
     this.production = production;
   }
+
+  createBuilding(
+    options = {
+      id: "",
+      name: "",
+      price: {},
+      type: {},
+      production: {},
+      creationTime: 0,
+      req: [],
+    }
+  ) {
+    const { id, name, price, type, production, creationTime, req } = options;
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.creationTime = creationTime;
+    this.currentPrice = { ...price };
+    this.type = new BuildingType(type.id, type.name);
+    this.production = new ProductionType(production.currency, production.count);
+    this.req = req;
+  }
+
+  get Type() {
+    return this.type;
+  }
+
+  get Production() {
+    return this.production;
+  }
 }
 
 module.exports = {
