@@ -59,10 +59,11 @@ class Building extends Entity {
    * @param {object} price
    * @param {BuildingType} type
    * @param {ProductionType} production
+   * @param {number} creationTime
    * @param {string[]} req
    */
-  constructor(id, name, price, type, production, req) {
-    super(id, name, price, req);
+  constructor(id, name, price, type, production, creationTime, req) {
+    super(id, name, price, creationTime, req);
     this.currentPrice = { ...price };
     this.type = type;
     this.production = production;

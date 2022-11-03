@@ -10,10 +10,11 @@ class Hero extends Unit {
    * @param {Price} price
    * @param {number} life
    * @param {number} speed
+   * @param {number} creationTime
    * @param {string[]} req
    */
-  constructor(id, name, price, life, speed, req = []) {
-    super(id, name, price, life, speed, req);
+  constructor(id, name, price, life, speed, creationTime, req = []) {
+    super(id, name, price, life, speed, creationTime, req);
   }
 }
 

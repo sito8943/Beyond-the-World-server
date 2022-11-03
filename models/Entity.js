@@ -6,12 +6,14 @@ class Entity {
    * @param {string} id
    * @param {string} name
    * @param {object} price
+   * @param {number} creationTime
    * @param {string[]} req
    */
-  constructor(id, name, price = {}, req = []) {
+  constructor(id, name, price = {}, creationTime = 0, req = []) {
     this.id = id;
     this.name = name;
     this.price = price;
+    this.creationTime = creationTime;
     this.req = req;
   }
 
@@ -40,6 +42,10 @@ class Entity {
 
   get Price() {
     return this.price;
+  }
+
+  get CreationTime() {
+    return this.creationTime;
   }
 }
 

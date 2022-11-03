@@ -9,10 +9,11 @@ class Unit extends Entity {
    * @param {object} price
    * @param {number} life
    * @param {number} speed
+   * @param {number} creationTime
    * @param {string[]} req
    */
-  constructor(id, name, price, life, speed, req) {
-    super(id, name, price, req);
+  constructor(id, name, price, life, speed, creationTime, req) {
+    super(id, name, price, creationTime, req);
     this.currentPrice = { ...price };
     this.life = life;
     this.currentLife = life;
@@ -22,12 +23,21 @@ class Unit extends Entity {
   }
 
   createUnit(
-    options = { id: "", name: "", price: {}, life: 0, speed: 0, req: [] }
+    options = {
+      id: "",
+      name: "",
+      price: {},
+      life: 0,
+      speed: 0,
+      creationTime: 0,
+      req: [],
+    }
   ) {
-    const { id, name, price, life, speed, req } = options;
+    const { id, name, price, life, speed, creationTime, req } = options;
     this.id = id;
     this.name = name;
     this.price = price;
+    this.creationTime = creationTime;
     this.currentPrice = { ...price };
     this.life = life;
     this.currentLife = life;
