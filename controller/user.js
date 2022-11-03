@@ -1,153 +1,92 @@
 // @ts-check
 
-const uuid = require("node-uuid");
+const { insert, getValue, update, getTable } = require("../db/local");
 
-const { insert, getValue, update, getTable, setTable } = require("../db/local");
-
-const { keys } = require("../utils/secure");
-
-const giveToken = () => {
-  const date = new Date();
-  const stringDate = `${date.getFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-  return stringDate;
+/**
+ *
+ * @param {object} remoteData
+ */
+const createUser = async (remoteData) => {
+  try {
+    const data = await getValue("user", remoteData.id);
+    if (data) return "exist";
+    else {
+      await insert("user", remoteData.id, remoteData);
+      return data;
+    }
+  } catch (err) {
+    return err;
+  }
 };
 
 /**
  *
- * @param {string} user
+ * @param {string} id
  * @returns
  */
-const getUserNotifications = async (user) => {
+const getUser = async (id) => {
   try {
-    const data = await getValue("users", user.toLowerCase());
-    if (data) {
-      const { notifications } = data;
-      return {
-        status: 200,
-        data: {
-          notifications,
-        },
-      };
-    }
-    return { status: 422, error: "not found" };
-  } catch (error) {
-    return { status: 500, error: String(error) };
-  }
-};
-
-/**
- *
- * @param {string} user
- * @param {string} pPassword
- * @returns user data
- */
-const login = async (user, pPassword) => {
-  try {
-    const data = await getValue("users", user.toLowerCase());
-    if (data) {
-      const { name, password, theme, role, photo, email } = data;
-      if (pPassword.toLowerCase() === password.toLowerCase()) {
-        const token = uuid.v4();
-        // @ts-ignore
-        keys.push(token);
-        return {
-          status: 200,
-          data: {
-            name,
-            role: role || "superadmin",
-            theme,
-            email,
-            photo,
-            token,
-            expiration: giveToken(),
-          },
-        };
-      } else return { status: 422, error: "wrong password" };
-    }
-    return { status: 422, error: "not found" };
-  } catch (error) {
-    return { status: 500, error: String(error) };
-  }
-};
-
-/**
- *
- * @param {string} user
- * @param {object} notification
- */
-const addNotification = async (user, notification) => {
-  try {
-    let userData = await getValue("users", user.toLowerCase());
-    if (userData) {
-      const { content, title } = notification;
-      const date = new Date();
-      userData.notifications.push({ content, title, date: date.getTime() });
-      await update("users", user.toLowerCase(), userData);
-      return {
-        status: 200,
-        data: {
-          user,
-          notification,
-        },
-      };
-    }
-    return { status: 422, error: "not found" };
+    const data = await getValue("user", id);
+    if (data) return data;
+    return undefined;
   } catch (err) {
-    return { status: 500, error: String(err) };
+    return err;
   }
 };
 
-const loadUsers = async () => {
+/**
+ *
+ * @param {object} remoteData
+ */
+const updateUser = async (remoteData) => {
   try {
-    const data = await getTable("users");
+    const data = await update("user", remoteData.id, remoteData);
+    if (data) return "exist";
+    else {
+      await insert("user", remoteData.id, remoteData);
+      return data;
+    }
+  } catch (err) {
+    return err;
+  }
+};
+
+/**
+ *
+ * @param {object} condition
+ * @param {object} toFetch
+ * @return
+ */
+const getUsers = async (condition = {}, toFetch = {}) => {
+  try {
+    const data = await getTable("user");
     if (data) {
-      const parsedData = [];
-      Object.values(data).map((item) => {
-        const { user, name, role, email } = item;
-        parsedData.push({ id: user, name, role, email });
+      const toReturn = [];
+      Object.values(data).forEach((item) => {
+        let itsOk = true;
+        for (const jtem of Object.keys(condition))
+          if (item[jtem] !== condition[jtem]) {
+            itsOk = false;
+            break;
+          }
+        if (itsOk) {
+          const parsedItem = {};
+          Object.keys(toFetch).forEach((jtem) => {
+            parsedItem[jtem] = item[jtem];
+          });
+          toReturn.push(parsedItem);
+        }
       });
-      return { status: 200, data: parsedData };
     }
-    return { status: 422, error: "not found" };
-  } catch (error) {
-    return { status: 500, error: String(error) };
-  }
-};
-
-/**
- *
- * @param {object} user
- * @returns user data
- */
-const register = async (user) => {
-  try {
-    const data = await getValue("users", user.name.toLowerCase());
-    if (data === undefined) {
-      await insert("users", user.name.toLowerCase(), { ...user });
-      const token = uuid.v4();
-      // @ts-ignore
-      keys.push(token);
-      return {
-        status: 200,
-        data: {
-          ...user,
-          token,
-          expiration: giveToken(),
-        },
-      };
-    }
-    return { status: 422, error: "username taken" };
+    return undefined;
   } catch (err) {
-    return { status: 500, error: String(err) };
+    return err;
   }
 };
 
 module.exports = {
-  login,
-  getUserNotifications,
-  addNotification,
-  register,
-  loadUsers,
+  createUser,
+  getUser,
+  updateUser,
+  getUsers,
 };

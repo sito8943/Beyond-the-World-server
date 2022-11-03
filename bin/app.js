@@ -3,8 +3,6 @@
 const config = require("../config");
 // const cron = require("node-cron");
 
-// const socketio = require("socket.io");
-
 /**
  * Module dependencies.
  */
@@ -12,7 +10,7 @@ const config = require("../config");
 const app = require("../app");
 const debug = require("debug")("btw:server");
 const http = require("http");
-// const connection = require("../model/connection");
+
 /**
  * Get port from environment and store in Express.
  */
@@ -25,14 +23,20 @@ app.set("port", port);
  */
 
 const server = http.createServer(app);
-/* var io = socketio(server, {
+const io = require("socket.io")(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"],
+    origin: "http://localhost:3000",
+    methods: "*",
   },
 });
 
-connection(io); */
+io.on("connection", (socket) => {
+  socket.emit("connected", { message: "a new client connected" });
+
+  socket.on("disconnect", function () {
+    console.log("user disconnected");
+  });
+});
 
 /**
  * Event listener for HTTP server "listening" event.

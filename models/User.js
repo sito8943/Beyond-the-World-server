@@ -17,17 +17,17 @@ class User {
    * @param {object} heros
    */
   constructor(
-    id,
-    user,
-    nick,
-    email,
-    password,
-    nation,
-    resources,
-    buildings,
-    technologies,
-    units,
-    heros
+    id = "",
+    user = "",
+    nick = "",
+    email = "",
+    password = "",
+    nation = "",
+    resources = {},
+    buildings = {},
+    technologies = {},
+    units = {},
+    heros = {}
   ) {
     this.id = id;
     this.user = user;

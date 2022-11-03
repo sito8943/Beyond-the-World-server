@@ -10,7 +10,7 @@ const {
   loadUsers,
   loadUser,
   getUserNotifications,
-} = require("../controller/user");
+} = require("../services/user");
 
 // auth
 const { verifyBearer } = require("../utils/secure");
