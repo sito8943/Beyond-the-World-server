@@ -1,5 +1,5 @@
 // @ts-check
-const Entity = require("./Entity");
+const { Entity, EntityTypeEnum } = require("./Entity");
 
 const UserStatusEnum = {
   Offline: 0,
@@ -161,8 +161,41 @@ class User {
       if (this.resources[item] < technology.Price[item] * count) return false;
     for (const item of Object.keys(technology.Price))
       this.resources[item] -= technology.Price[item] * count;
-    return technology;
+    return { technology, count };
   }
+
+  /**
+   *
+   * @param {Entity} technology
+   * @param {number} count
+   * @returns
+   */
+  addTechnology(technology, count) {
+    switch (technology.Type) {
+      case EntityTypeEnum.Unit:
+        this.units[technology.Id] = { count };
+      case EntityTypeEnum.Building:
+        this.buildings[technology.Id] = {
+          level: count,
+          // @ts-ignore
+          productionType: technology.production,
+          // @ts-ignore
+          buildingType: technology.buildingType,
+        };
+      case EntityTypeEnum.Technology:
+        this.technologies[technology.Id] = {
+          level: count,
+        };
+      case EntityTypeEnum.Hero:
+        this.heros[technology.Id] = {
+          level: count,
+        };
+      default: // none
+        break;
+    }
+  }
+
+  getProductionCycle() {}
 
   get Id() {
     return this.id;

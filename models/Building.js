@@ -1,6 +1,6 @@
 // @ts-check
 
-const Entity = require("./Entity");
+const { Entity, EntityTypeEnum } = require("./Entity");
 const Currency = require("./Currency");
 class ProductionType {
   /**
@@ -57,15 +57,15 @@ class Building extends Entity {
    * @param {string} id
    * @param {string} name
    * @param {object} price
-   * @param {BuildingType} type
+   * @param {BuildingType} buildingType
    * @param {ProductionType} production
    * @param {number} creationTime
    * @param {string[]} req
    */
-  constructor(id, name, price, type, production, creationTime, req) {
-    super(id, name, price, creationTime, req);
+  constructor(id, name, price, buildingType, production, creationTime, req) {
+    super(id, name, price, creationTime, req, EntityTypeEnum.Building);
     this.currentPrice = { ...price };
-    this.type = type;
+    this.buildingType = buildingType;
     this.production = production;
   }
 
@@ -74,7 +74,8 @@ class Building extends Entity {
       id: "",
       name: "",
       price: {},
-      type: {},
+      building: "",
+      buildingType: {},
       production: {},
       creationTime: 0,
       req: [],
@@ -86,13 +87,14 @@ class Building extends Entity {
     this.price = price;
     this.creationTime = creationTime;
     this.currentPrice = { ...price };
-    this.type = new BuildingType(type.id, type.name);
+    this.buildingType = new BuildingType(type.id, type.name);
     this.production = new ProductionType(production.currency, production.count);
     this.req = req;
+    this.type = EntityTypeEnum.Building;
   }
 
-  get Type() {
-    return this.type;
+  get BuildingType() {
+    return this.buildingType;
   }
 
   get Production() {

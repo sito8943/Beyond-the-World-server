@@ -1,5 +1,5 @@
 // @ts-check
-const Entity = require("./Entity");
+const { Entity } = require("./Entity");
 
 class Unit extends Entity {
   /**

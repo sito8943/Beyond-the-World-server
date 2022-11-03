@@ -74,11 +74,13 @@ router.post("/login", async (req, res) => {
     const { user, password } = req.body;
     const result = await login(user, password);
     switch (result.status) {
-      case 200:
+      case 200: {
         log(good(`${user} logged successful`));
-        usersOnline[user] = await getUserByName(user);
+        const userData = await getUserByName(user);
+        usersOnline[userData.id] = userData;
         res.send(result).status(200);
         break;
+      }
       default:
         log(error(result.error));
         res.send({ error: result.error }).status(result.status);

@@ -1,6 +1,6 @@
 // @ts-check
 const { Price } = require("./Currency");
-const Entity = require("./Entity");
+const { Entity } = require("./Entity");
 
 class Technology extends Entity {
   /**

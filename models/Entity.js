@@ -1,5 +1,13 @@
 // @ts-check
 
+const EntityTypeEnum = {
+  None: 0,
+  Unit: 1,
+  Building: 2,
+  Technology: 3,
+  Hero: 4,
+};
+
 class Entity {
   /**
    *
@@ -8,13 +16,22 @@ class Entity {
    * @param {object} price
    * @param {number} creationTime
    * @param {string[]} req
+   * @param {number} type
    */
-  constructor(id, name, price = {}, creationTime = 0, req = []) {
+  constructor(
+    id,
+    name,
+    price = {},
+    creationTime = 0,
+    req = [],
+    type = EntityTypeEnum.None
+  ) {
     this.id = id;
     this.name = name;
     this.price = price;
     this.creationTime = creationTime;
     this.req = req;
+    this.type = type;
   }
 
   /**
@@ -47,6 +64,10 @@ class Entity {
   get CreationTime() {
     return this.creationTime;
   }
+
+  get Type() {
+    return this.type;
+  }
 }
 
-module.exports = Entity;
+module.exports = { Entity, EntityTypeEnum };
