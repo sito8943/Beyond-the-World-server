@@ -2,7 +2,10 @@
 
 const config = require("../config");
 
-const { resourcesChronons } = require("../chronons/resourcesChronons");
+const {
+  resourcesChronons,
+  playerCounter,
+} = require("../chronons/resourcesChronons");
 
 /**
  * Module dependencies.
@@ -48,6 +51,7 @@ const onListening = () => {
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   debug("Listening on " + bind);
   resourcesChronons();
+  playerCounter();
   console.log("Listening on " + bind);
 };
 

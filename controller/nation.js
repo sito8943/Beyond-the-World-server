@@ -1,8 +1,32 @@
 // @ts-check
 
-const { getValue } = require("../db/template");
+const { getValue, getTable } = require("../db/template");
 
 const { error, log, info, good } = require("../utils/chalk");
+
+/**
+ *
+ * @param {string} nation
+ * @param {boolean} forList
+ */
+const getNations = async (nation, forList) => {
+  try {
+    if (nation) {
+      log(info(`fetching information of nation ${nation}`));
+      const nationData = await getValue("nation", nation);
+      return nationData;
+    } else {
+      log(info("fetching information of nations"));
+      const nations = await getTable("nation");
+      if (nations)
+        return forList
+          ? nations.map((item) => ({ id: item.id, name: item.name }))
+          : nations;
+    }
+  } catch (err) {
+    log(error(err));
+  }
+};
 
 /**
  *
@@ -118,6 +142,7 @@ const getHerosFromNation = async (nation, forList) => {
 };
 
 module.exports = {
+  getNations,
   getBuildingsFromNation,
   getUnitsFromNation,
   getTechnologiesFromNation,
