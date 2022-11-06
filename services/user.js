@@ -4,7 +4,7 @@ const uuid = require("node-uuid");
 const { usersOnline } = require("../chronons/resourcesChronons");
 const {
   getUser,
-  getUserByName,
+  getUserByUser,
   getUsers,
   createUser,
   updateUser,
@@ -52,7 +52,7 @@ const getUserNotifications = async (user) => {
  */
 const login = async (user, pPassword) => {
   try {
-    const data = await getUserByName(user.toLowerCase());
+    const data = await getUserByUser(user.toLowerCase());
     if (data) {
       const { id, password } = data;
       if (pPassword.toLowerCase() === password.toLowerCase()) {
@@ -140,8 +140,8 @@ const loadUsers = async () => {
     if (data) {
       const parsedData = [];
       Object.values(data).map((item) => {
-        const { user, name, role, email } = item;
-        parsedData.push({ id: user, name, role, email });
+        const { id, user, nick, role, email } = item;
+        parsedData.push({ id, user, nick, role, email });
       });
       return { status: 200, data: parsedData };
     }
@@ -163,11 +163,12 @@ const register = async (user, password) => {
     if (data === undefined) {
       const token = uuid.v4();
       // @ts-ignore
-      keys.push(token);
+      const id = Buffer.from(user).toString("base64");
+      keys[id] = token;
       return {
         status: 200,
         data: {
-          id: Buffer.from(user).toString("base64"),
+          id,
           token,
           expiration: giveToken(),
         },

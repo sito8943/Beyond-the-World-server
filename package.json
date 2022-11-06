@@ -1,6 +1,6 @@
 {
   "name": "beyond-the-world-server",
-  "version": "0.6.2",
+  "version": "0.7.1",
   "description": "Beyond the world server",
   "main": "app.js",
   "scripts": {

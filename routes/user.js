@@ -69,7 +69,8 @@ router.post("/login", async (req, res) => {
   load.start();
   try {
     const { user, password } = req.body;
-    const result = await login(user, password);
+    const parsedUser = user.split("@")[0];
+    const result = await login(parsedUser, password);
     switch (result.status) {
       case 200: {
         log(good(`${user} logged successful`));

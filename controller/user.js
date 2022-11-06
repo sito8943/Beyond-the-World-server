@@ -19,15 +19,15 @@ const getUser = async (id) => {
 
 /**
  *
- * @param {string} name
+ * @param {string} user
  * @returns
  */
-const getUserByName = async (name) => {
+const getUserByUser = async (user) => {
   try {
     const data = await getTable("user");
     if (data)
       for (const item of Object.values(data))
-        if (item.name === name) return item;
+        if (item.user === user) return item;
     return undefined;
   } catch (err) {
     return err;
@@ -91,7 +91,7 @@ const getUsers = async (condition = {}, toFetch = {}) => {
  */
 const createUser = async (user, password) => {
   try {
-    const data = await getUserByName(user);
+    const data = await getUserByUser(user);
     if (data) return "exist";
     else {
       const id = Buffer.from(user).toString("base64");
@@ -113,7 +113,7 @@ const createUser = async (user, password) => {
 module.exports = {
   createUser,
   getUser,
-  getUserByName,
+  getUserByUser,
   updateUser,
   getUsers,
 };
