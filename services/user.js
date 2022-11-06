@@ -166,7 +166,7 @@ const register = async (user) => {
       return {
         status: 200,
         data: {
-          ...user,
+          id: user.id,
           token,
           expiration: giveToken(),
         },

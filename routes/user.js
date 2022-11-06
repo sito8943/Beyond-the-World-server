@@ -11,7 +11,6 @@ const {
   loadUser,
   getUserNotifications,
 } = require("../services/user");
-const { getUserByName } = require("../controller/user");
 
 // auth
 const { verifyBearer } = require("../utils/secure");
@@ -134,7 +133,7 @@ router.get("/get", async (req, res) => {
 router.post("/register", async (req, res) => {
   load.start();
   try {
-    const user = req.body.user;
+    const { user } = req.body;
     const result = await register(user);
     if (result.error == undefined) res.send(result);
     else res.send(result.error);

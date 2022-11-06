@@ -2,7 +2,7 @@
 
 const { getValue, getTable } = require("../db/template");
 
-const { error, log, info, good } = require("../utils/chalk");
+const { error, log, info } = require("../utils/chalk");
 
 /**
  *
