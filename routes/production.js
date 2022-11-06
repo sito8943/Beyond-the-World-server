@@ -9,6 +9,12 @@ const {
   getTechnologiesFromNation,
   getHerosFromNation,
 } = require("../controller/nation");
+const {
+  getHeros,
+  getBuildings,
+  getTechnologies,
+  getUnits,
+} = require("../controller/technologies");
 
 // auth
 const { verifyBearer } = require("../utils/secure");
@@ -54,7 +60,16 @@ router.get("/fetch-buildings", async (req, res) => {
       if (req.headers.authorization.indexOf("Bearer ") === 0) {
         const verified = verifyBearer(req.headers.authorization);
         if (verified) {
-          const { nation } = req.query;
+          const { user, forList } = req.query;
+          let nation = req.query.nation;
+          if (user && !nation) nation = usersOnline[user].nation;
+          const buildings = getBuildingsFromNation(nation, forList);
+          res
+            .send({
+              status: 200,
+              data: { buildings },
+            })
+            .status(200);
           load.stop();
           return;
         }
@@ -74,7 +89,16 @@ router.get("/fetch-technologies", async (req, res) => {
       if (req.headers.authorization.indexOf("Bearer ") === 0) {
         const verified = verifyBearer(req.headers.authorization);
         if (verified) {
-          const { nation } = req.query;
+          const { user, forList } = req.query;
+          let nation = req.query.nation;
+          if (user && !nation) nation = usersOnline[user].nation;
+          const technologies = getTechnologiesFromNation(nation, forList);
+          res
+            .send({
+              status: 200,
+              data: { technologies },
+            })
+            .status(200);
           load.stop();
           return;
         }
@@ -124,7 +148,7 @@ router.get("/fetch-heros", async (req, res) => {
   } catch (err) {
     res.send({ err }).status(500);
   }
-  load.stop();ff
+  load.stop();
 });
 
 router.post("/user-make", async (req, res) => {
@@ -134,7 +158,15 @@ router.post("/user-make", async (req, res) => {
       if (req.headers.authorization.indexOf("Bearer ") === 0) {
         const verified = verifyBearer(req.headers.authorization);
         if (verified) {
-          const { techId, type, noCost } = req.body;
+          const { user, techId, type, noCost, count } = req.body;
+          if (noCost)
+            usersOnline[user].addTechnology({ Id: techId, Type: type }, count);
+          else {
+            // switch type
+            // const tech
+            if (usersOnline[user].canMake())
+            res.send({ user, techId, noCost, count }).status(200);
+          }
           load.stop();
           return;
         }

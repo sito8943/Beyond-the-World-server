@@ -1,7 +1,7 @@
 // @ts-check
 
 const uuid = require("node-uuid");
-
+const { usersOnline } = require("../chronons/resourcesChronons");
 const {
   getUser,
   getUserByName,
@@ -57,6 +57,8 @@ const login = async (user, pPassword) => {
       const { id, password } = data;
       if (pPassword.toLowerCase() === password.toLowerCase()) {
         await updateUser({ ...data, state: UserStatusEnum.Online });
+        usersOnline[data.id] = new User();
+        usersOnline[data.id].createUser({ ...data });
         const token = uuid.v4();
         // @ts-ignore
         keys[id] = token;
@@ -85,12 +87,13 @@ const logOut = async (user) => {
   try {
     const data = await getUser(user);
     if (data) {
-      delete keys[user];
       await updateUser({
         ...data,
         state: UserStatusEnum.Offline,
         lastOnline: new Date().getTime(),
       });
+      delete keys[user];
+      delete usersOnline[user];
       return {
         status: 200,
         data: {

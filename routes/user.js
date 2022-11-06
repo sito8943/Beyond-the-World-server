@@ -1,6 +1,5 @@
 const express = require("express");
 
-const { usersOnline } = require("../chronons/resourcesChronons");
 const { error, log, info, good } = require("../utils/chalk");
 
 // locals
@@ -52,7 +51,6 @@ router.post("/logout", async (req, res) => {
     switch (result.status) {
       case 200:
         log(good(`${user} logged out successful`));
-        delete usersOnline[user];
         res.send(result).status(200);
         break;
       default:
@@ -76,8 +74,6 @@ router.post("/login", async (req, res) => {
     switch (result.status) {
       case 200: {
         log(good(`${user} logged successful`));
-        const userData = await getUserByName(user);
-        usersOnline[userData.id] = userData;
         res.send(result).status(200);
         break;
       }
