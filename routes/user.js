@@ -133,8 +133,8 @@ router.get("/get", async (req, res) => {
 router.post("/register", async (req, res) => {
   load.start();
   try {
-    const { user } = req.body;
-    const result = await register(user);
+    const { user, password } = req.body;
+    const result = await register(user, password);
     if (result.error == undefined) res.send(result);
     else res.send(result.error);
   } catch (err) {

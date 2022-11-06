@@ -4,23 +4,6 @@ const { insert, getValue, update, getTable } = require("../db/local");
 
 /**
  *
- * @param {object} remoteData
- */
-const createUser = async (remoteData) => {
-  try {
-    const data = await getValue("user", remoteData.id);
-    if (data) return "exist";
-    else {
-      await insert("user", remoteData.id, remoteData);
-      return data;
-    }
-  } catch (err) {
-    return err;
-  }
-};
-
-/**
- *
  * @param {string} id
  * @returns
  */
@@ -96,6 +79,32 @@ const getUsers = async (condition = {}, toFetch = {}) => {
       });
     }
     return undefined;
+  } catch (err) {
+    return err;
+  }
+};
+
+/**
+ *
+ * @param {string} user
+ * @param {string} password
+ */
+const createUser = async (user, password) => {
+  try {
+    const data = await getUserByName(user);
+    if (data) return "exist";
+    else {
+      const id = Buffer.from(user).toString("base64");
+      await insert("user", id, {
+        id,
+        user: user.split("@")[0],
+        email: user,
+        state: 1,
+        lastOnline: 0,
+        password,
+      });
+      return data;
+    }
   } catch (err) {
     return err;
   }

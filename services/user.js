@@ -153,12 +153,13 @@ const loadUsers = async () => {
 
 /**
  *
- * @param {object} user
+ * @param {string} user
+ * @param {string} password
  * @returns user data
  */
-const register = async (user) => {
+const register = async (user, password) => {
   try {
-    const data = await createUser(user);
+    const data = await createUser(user, password);
     if (data === undefined) {
       const token = uuid.v4();
       // @ts-ignore
@@ -166,7 +167,7 @@ const register = async (user) => {
       return {
         status: 200,
         data: {
-          id: user.id,
+          id: Buffer.from(user).toString("base64"),
           token,
           expiration: giveToken(),
         },
