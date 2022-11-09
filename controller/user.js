@@ -47,6 +47,7 @@ const updateUser = async (remoteData) => {
       return data;
     }
   } catch (err) {
+    console.log(err);
     return err;
   }
 };

@@ -15,10 +15,10 @@ const { UserStatusEnum, User } = require("../models/User");
 
 const giveToken = () => {
   const date = new Date();
-  const stringDate = `${date.getFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-  return stringDate;
+  // date.setHours(date.getHours() + 1);
+  date.setSeconds(date.getSeconds() + 20);
+  const stringDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  return { string: stringDate, number: date.getTime() };
 };
 
 /**
@@ -60,14 +60,15 @@ const login = async (user, pPassword) => {
         usersOnline[data.id] = new User();
         usersOnline[data.id].createUser({ ...data });
         const token = uuid.v4();
+        const expiration = giveToken();
         // @ts-ignore
-        keys[id] = token;
+        keys[id] = { token, time: expiration.number };
         return {
           status: 200,
           data: {
             id,
             token,
-            expiration: giveToken(),
+            expiration: expiration.string,
           },
         };
       } else return { status: 422, error: "wrong password" };
@@ -164,13 +165,14 @@ const register = async (user, password) => {
       const token = uuid.v4();
       // @ts-ignore
       const id = Buffer.from(user).toString("base64");
-      keys[id] = token;
+      const expiration = giveToken();
+      keys[id] = { token, time: expiration.number };
       return {
         status: 200,
         data: {
           id,
           token,
-          expiration: giveToken(),
+          expiration: expiration.string,
         },
       };
     }
